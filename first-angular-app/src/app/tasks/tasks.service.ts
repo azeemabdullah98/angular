@@ -3,6 +3,14 @@ import { type NewTask } from './task/task.model';
 
 @Injectable({ providedIn: 'root' })
 export class TasksService {
+  constructor() {
+    const tasks = localStorage.getItem('tasks');
+
+    if (tasks) {
+      this.tasks = JSON.parse(tasks);
+    }
+  }
+
   tasks = [
     {
       id: 't1',
@@ -41,9 +49,14 @@ export class TasksService {
       summary: taskData.summary,
       dueDate: taskData.date,
     });
+    this.saveTask();
+  }
+  private saveTask() {
+    localStorage.setItem('tasks', JSON.stringify(this.tasks));
   }
 
   deleteTask(userId: string) {
-    return (this.tasks = this.tasks.filter((task) => task.id !== userId));
+    this.tasks = this.tasks.filter((task) => task.id !== userId);
+    this.saveTask();
   }
 }
