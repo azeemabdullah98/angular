@@ -14,7 +14,7 @@
   </ul>
   <!-- @if(selectedUserName){ -->
   <app-tasks
-    [userId]="selectedUserName.id"
+    [userId]="selectedUserName!.id"
     *ngIf="selectedUserName; else fallback"
     [name]="selectedUserName!.name"
   />
